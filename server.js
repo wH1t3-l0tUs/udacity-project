@@ -43,9 +43,9 @@ app.get('/filteredimage', async (req, res) => {
             return res.status(404).send('Image not found');
         }
 
-        res.status(200).sendFile(imageByUrl);
-
-        deleteLocalFiles(imageByUrl);
+        res.status(200).sendFile(imageByUrl, () => {
+            deleteLocalFiles([imageByUrl]);
+        });
     } catch (error) {
         res.status(500).send('Server Internal Error');
     }
